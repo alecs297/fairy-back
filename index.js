@@ -37,6 +37,10 @@ app.use(express.json({extended: true}));
 app.use(cors({origin: [process.env.CLIENT_URL]}));
 
 app.use("/api/v1", v1);
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+});
 
 server.listen(PORT, HOST, () => {
     console.info(`Listening on ${SSL.enabled ? "https" : "http"}//${HOST}:${PORT}`);
