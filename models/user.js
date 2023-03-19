@@ -1,6 +1,6 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
-export default new Schema({
+export default model("user", new Schema({
     username: {
         type: String,
         required: true,
@@ -16,6 +16,6 @@ export default new Schema({
     },
     transactions: [{
         type: Schema.Types.ObjectId,
-        ref: "Transaction"
+        ref: "transaction"
     }]
-});
+}));
