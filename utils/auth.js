@@ -1,12 +1,12 @@
 import {hash, verify} from 'argon2';
-import user from '../models/user.js';
+import User from '../models/user.js';
 
 function hashPassword(password) {
     return hash(password);
 }
 
-function checkPassword(password, hash) {
-    return verify(hash, password);
+async function checkPassword(password, hash) {
+    return await verify(hash, password);
 }
 
 function isValidName(name) {
@@ -25,9 +25,9 @@ function isValidPassword(password) {
 }
 
 export async function login(username, password) {
-    let user = await user.findOne({username: username});
+    let user = await User.findOne({username: username});
     if (user) {
-        if (checkPassword(password, user.password)) {
+        if (await checkPassword(password, user.password)) {
             return user;
         }
     }
@@ -35,13 +35,13 @@ export async function login(username, password) {
 }
 
 export async function register(username, password, name) {
-    let existing = await user.findOne({username: username});
+    let existing = await User.findOne({username: username});
     if (existing) throw new Error('Username already exists');
     if (!isValidUsername(username)) throw new Error('Username is invalid');
     if (!isValidPassword(password)) throw new Error('Password is invalid');
     if (!isValidName(name)) throw new Error('Name is invalid');
     let hash = await hashPassword(password);
-    let user = new user({
+    let user = new User({
         username: username,
         password: hash,
         name: name
@@ -51,9 +51,9 @@ export async function register(username, password, name) {
 }
 
 export async function changePassword(username, password, newPassword) {
-    let user = await user.findOne({username: username});
+    let user = await User.findOne({username: username});
     if (!user) throw new Error('User not found');
-    if (!checkPassword(password, user.password)) throw new Error('Invalid password');
+    if (!(await checkPassword(password, user.password))) throw new Error('Invalid password');
     if (!isValidPassword(newPassword)) throw new Error('New Password is invalid');
     let hash = await hashPassword(newPassword);
     user.password = hash;

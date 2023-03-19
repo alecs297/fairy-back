@@ -1,25 +1,25 @@
 import { readFileSync } from 'fs';
-import { verify } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 export default class {
-    constructor(certPath, keyPath, expiresIn = '1Omin') {
+    constructor(certPath, keyPath, expiresIn = '1Om') {
         this.cert = readFileSync(certPath);
         this.key = readFileSync(keyPath);
         this.expiresIn = expiresIn;
     }
 
     verify(token) {
-        return verify(token, this.cert, { algorithms: ['RS256'] })
+        return jwt.verify(token, this.cert, { algorithms: ['RS256'] })
     }
 
     sign(payload) {
-        return sign(payload, this.key, {
+        return jwt.sign(payload, this.key, {
             algorithm: 'RS256',
             expiresIn: this.expiresIn
         });
     }
 
-    validateToken(req, res, next) {
+    validateToken = (req, res, next) => {
         const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1];
 
@@ -32,6 +32,7 @@ export default class {
             req.user = payload;
             next();
         } catch (err) {
+            console.error(err);
             return res.status(403).json({ message: 'Forbidden' });
         }
     }
