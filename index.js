@@ -43,5 +43,5 @@ app.use((err, req, res, next) => {
 });
 
 server.listen(PORT, HOST, () => {
-    console.info(`Listening on ${SSL.enabled ? "https" : "http"}//${HOST}:${PORT}`);
+    console.info(`Listening on ${SSL.enabled ? "https" : "http"}://${HOST}:${PORT}`);
 });
