@@ -50,8 +50,8 @@ export async function register(username, password, name) {
     return user;
 }
 
-export async function changePassword(username, password, newPassword) {
-    let user = await User.findOne({username: username});
+export async function changePassword(id, password, newPassword) {
+    let user = await User.findById(id);
     if (!user) throw new Error('User not found');
     if (!(await checkPassword(password, user.password))) throw new Error('Invalid password');
     if (!isValidPassword(newPassword)) throw new Error('New Password is invalid');

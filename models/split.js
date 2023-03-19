@@ -1,26 +1,25 @@
 import { model, Schema } from "mongoose";
-import { randomBytes } from "crypto";
 
 
 export default model("split", new Schema({
     name: {
-        type: String,
-        required: true
+        type: String
     },
     date: {
         type: Date,
-        required: true,
         default: Date.now
     },
     users: [{
         type: String,
-        required: true,
-        unique: true
+        required: true
     }],
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "user"
+    },
     transactions: [{
         name: {
-            type: String,
-            required: true
+            type: String
         },
         payer: {
             type: String,
@@ -28,7 +27,7 @@ export default model("split", new Schema({
         },
         amount: {
             type: Number,
-            required: true,
+            default: 0,
             min: 0
         }
     }]

@@ -13,9 +13,5 @@ export default model("user", new Schema({
     name: {
         type: String,
         required: true
-    },
-    transactions: [{
-        type: Schema.Types.ObjectId,
-        ref: "transaction"
-    }]
+    }
 }));
