@@ -1,14 +1,8 @@
-import { Schema } from "mongoose";
-import randomBytes from "crypto";
+import { model, Schema } from "mongoose";
+import { randomBytes } from "crypto";
 
 
-export default new Schema({
-    _id: {
-        type: String,
-        required: true,
-        unique: true,
-        default: () => randomBytes(32).toString('hex')
-    },
+export default model("split", new Schema({
     name: {
         type: String,
         required: true
@@ -38,4 +32,4 @@ export default new Schema({
             min: 0
         }
     }]
-});
+}));
