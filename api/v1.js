@@ -35,7 +35,7 @@ router.post("/register", async (req, res) => {
             name: user.name,
             id: user._id
         });
-        res.setHeader("Authorization", token);
+        res.json({ token });
     } catch (error) {
         res.json({status: 401, message: error.message });
     }
