@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
 
-Fairy is a basic bill management system designed to help with your groups' spendings, build with Angular, express and mongoDB.
+Fairy is a basic bill management system designed to help with your groups' spendings, built with Angular, express and mongoDB.
 
 ## Server (express)
 
